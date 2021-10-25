@@ -54,6 +54,17 @@ export default class FindShortestPath extends React.Component {
 
   setGridText(grid) {
     const newGrid = grid.slice();
+
+    this.writeP(newGrid);
+    this.writeA(newGrid);
+    this.writeU(newGrid);
+    this.writeN(newGrid);
+    this.writeB(newGrid);
+
+    return newGrid;
+  }
+
+  writeP(newGrid) {
     // P
     for(let col = 11; col <= 14;col++) {
       for(let row = 5; row <= 10; row++) {
@@ -86,7 +97,9 @@ export default class FindShortestPath extends React.Component {
         }
       }
     }
+  }
 
+  writeA(newGrid) {
     // A
     for(let col = 16; col <= 19;col++) {
       for(let row = 5; row <= 10; row++) {
@@ -119,7 +132,9 @@ export default class FindShortestPath extends React.Component {
         }
       }
     }
+  }
 
+  writeU(newGrid) {
     // U
     for(let col = 19; col <= 22;col++) {
       for(let row = 13; row <= 17; row++) {
@@ -144,7 +159,9 @@ export default class FindShortestPath extends React.Component {
         }
       }
     }
+  }
 
+  writeN(newGrid) {
     // N
     for(let col = 24; col <= 28;col++) {
       for(let row = 13; row <= 17; row++) {
@@ -177,7 +194,9 @@ export default class FindShortestPath extends React.Component {
         }
       }
     }
+  }
 
+  writeB(newGrid) {
     // B
     for(let col = 30; col <= 33;col++) {
       for(let row = 13; row <= 17; row++) {
@@ -202,7 +221,6 @@ export default class FindShortestPath extends React.Component {
         }
       }
     }
-    return newGrid;
   }
 
   createNode = (row, col) => {
