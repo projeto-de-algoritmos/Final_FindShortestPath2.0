@@ -1,6 +1,7 @@
 import React from 'react';
 import Node from './Node';
 import {dijkstra} from '../dijkstra';
+import {bfs} from '../bfs';
 
 import './FindShortestPath.css';
 
@@ -376,6 +377,48 @@ export default class FindShortestPath extends React.Component {
     }
   }
 
+  clearGrid() {
+    if (!this.state.isRunning) {
+      const newGrid = this.state.grid.slice();
+      for (const row of newGrid) {
+        for (const node of row) {
+          let nodeClassName = document.getElementById(
+            `node-${node.row}-${node.col}`,
+          ).className;
+          if (
+            nodeClassName !== 'node node-start' &&
+            nodeClassName !== 'node node-finish' &&
+            nodeClassName !== 'node node-wall'
+          ) {
+            document.getElementById(`node-${node.row}-${node.col}`).className =
+              'node';
+            node.isVisited = false;
+            node.distance = Infinity;
+            node.distanceToFinishNode =
+              Math.abs(this.state.FINISH_NODE_ROW - node.row) +
+              Math.abs(this.state.FINISH_NODE_COL - node.col);
+          }
+          if (nodeClassName === 'node node-finish') {
+            node.isVisited = false;
+            node.distance = Infinity;
+            node.distanceToFinishNode = 0;
+          }
+          if (nodeClassName === 'node node-start') {
+            node.isVisited = false;
+            node.distance = Infinity;
+            node.distanceToFinishNode =
+              Math.abs(this.state.FINISH_NODE_ROW - node.row) +
+              Math.abs(this.state.FINISH_NODE_COL - node.col);
+            node.isStart = true;
+            node.isWall = false;
+            node.previousNode = null;
+            node.isNode = true;
+          }
+        }
+      }
+    }
+  }
+
   clearWalls() {
     if (!this.state.isRunning) {
       const newGrid = this.state.grid.slice();
@@ -394,7 +437,7 @@ export default class FindShortestPath extends React.Component {
     }
   }
 
-  visualize() {
+  visualize(algo) {
     if (!this.state.isRunning) {
       this.toggleIsRunning();
       const {grid} = this.state;
@@ -402,7 +445,19 @@ export default class FindShortestPath extends React.Component {
         grid[this.state.START_NODE_ROW][this.state.START_NODE_COL];
       const finishNode =
         grid[this.state.FINISH_NODE_ROW][this.state.FINISH_NODE_COL];
-      dijkstra(grid, startNode, finishNode);
+      // dijkstra(grid, startNode, finishNode);
+
+      switch (algo) {
+        case 'Dijkstra':
+          dijkstra(grid, startNode, finishNode);
+          break;
+        case 'BFS':
+          bfs(grid, startNode, finishNode);
+          break;
+        default:
+          // should never get here
+          break;
+      }
        
       const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
       nodesInShortestPathOrder.push('end');
@@ -470,11 +525,23 @@ export default class FindShortestPath extends React.Component {
             })}
           </tbody>
         </table>
-        <div>
+        <div className="btns">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => this.clearGrid()}>
+            Clear Grid
+          </button>
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => this.visualize()}>
+            onClick={() => this.visualize('BFS')}>
+            BFS
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('Dijkstra')}>
             Dijkstra's
           </button>
         </div>
