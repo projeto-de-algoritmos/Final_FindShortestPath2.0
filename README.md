@@ -11,6 +11,8 @@
 | 19/0019158 | Rafael Leão  |
 
 ## Sobre
+Link da apresentação: https://youtu.be/6Fb3XKnOnyA
+
 Versão 2.0 do FindShortestPath. O App permite ao usuário visualizar como funcionam alguns algoritmos de busca.
 
 Na segunda versão foram adicionadas duas novas funcionalidades: um botão de limpar o grid após o algoritmo ser executado, bem como o algoritmo BFS.
