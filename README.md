@@ -38,4 +38,4 @@ Pré-requisitos:
 ## Uso
 - Deve-se clonar o repositório git
 - rodar o comando "yarn" ou "npm install"
-- abrir o app em "localhost:3000
+- abrir o app em "localhost:3000"
